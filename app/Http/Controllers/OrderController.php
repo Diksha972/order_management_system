@@ -8,6 +8,7 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use Mail;
+use Carbon\Carbon;
 
 
 class OrderController extends Controller
@@ -18,93 +19,28 @@ class OrderController extends Controller
         return view('product-list', compact('products'));
     }
 
-//     public function placeOrder(Request $request, $id)
-// {
-//     $product = Product::findOrFail($id);
-
-//     $quantity = $request->input('quantity', 1);
-//     $total = $product->price * $quantity;
-
-//     $order = new Order();
-//     $order->user_id = auth()->id();
-//     $order->product_id = $product->id;
-//     $order->quantity = $quantity;
-//     $order->total_price = $total;  // ✅ Save total price
-//     $order->status = 'pending';
-//     $order->save();
-
-//     return redirect()->back()->with('success', 'Order placed successfully!');
-// }
-
-//  public function placeOrder(Request $request, $id)
-// {
-//     $product = Product::findOrFail($id);
-
-//     $quantity = $request->input('quantity', 1);
-//     $total = $product->price * $quantity;
-
-//     $order = new Order();
-//     $order->user_id = auth()->id();
-//     $order->product_id = $product->id;
-//     $order->quantity = $quantity;
-//     $order->total_price = $total;  
-//     $order->status = 'pending';
-//     $order->save();
-
-//     $request->validate([
-//         'quantity' => 'required|integer|min:1',
-//     ]);
-
-//     $product = Product::findOrFail($id);
-
-//     // Store the order
-//     $order = Order::create([
-//         'user_id' => Auth::id(),
-//         'product_id' => $product->id,
-//         'quantity' => $request->quantity,
-//         'total_price' => $product->$total,
-//         'status' => 'pending',
-//     ]);
-
-//     // Generate PDF
-//     $pdf = PDF::loadView('invoice', [
-//         'order' => $order,
-//         'product' => $product,
-//         'user' => Auth::user(),
-//     ]);
-
-//     $pdfPath = storage_path("app/public/invoice_order_{$order->id}.pdf");
-//     $pdf->save($pdfPath); // Save to disk
-
-//     // Email with attachment (optional)
-//     Mail::send('email', ['order' => $order], function($message) use ($pdfPath, $order) {
-//         $message->to(Auth::user()->email)
-//                 ->subject('Order Confirmation')
-//                 ->attach($pdfPath, [
-//                     'as' => "invoice_order_{$order->id}.pdf",
-//                     'mime' => 'application/pdf',
-//                 ]);
-//     });
-
-//     return redirect()->back()->with('success', 'Order placed! Invoice sent via email.');
-// }
-
 public function placeOrder(Request $request, $id)
 {
     $request->validate([
-        'quantity' => 'required|integer|min:1',
+          'address' => 'required|string',
+            'phone' => 'required|string|max:15',
+        'quantity' => 'required|integer|min:1|max:100', 
     ]);
 
     $product = Product::findOrFail($id);
-    $quantity = $request->input('quantity', 1);
+    $quantity = $request->input('quantity');
     $total = $product->price * $quantity;
 
     // Create the order (only once)
     $order = Order::create([
         'user_id' => Auth::id(),
         'product_id' => $product->id,
-        'quantity' => $quantity,
+        'quantity' =>$request->input('quantity'),
+         'address'  => $request->input('address'),
+         'phone'    => $request->input('phone'),
         'total_price' => $total,
+        'order_date'     => Carbon::now(),
+        'delivered_date' => Carbon::now()->addDays(3),
         'status' => 'pending',
     ]);
 

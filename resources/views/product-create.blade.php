@@ -33,10 +33,10 @@
                         <input type="number" name="price" step="0.01" class="form-control" placeholder="Enter product price" required>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
                         <input type="number" name="quantity" class="form-control" placeholder="Enter available quantity" required>
-                    </div>
+                    </div> --}}
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-success">💾 Save Product</button>

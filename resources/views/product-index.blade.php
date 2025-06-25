@@ -23,7 +23,7 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Price (₹)</th>
-                                <th>Quantity</th>
+                                {{-- <th>Quantity</th> --}}
                                 <th width="150">Actions</th>
                             </tr>
                         </thead>
@@ -33,7 +33,6 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->description }}</td>
                                 <td>₹{{ number_format($product->price, 2) }}</td>
-                                <td>{{ $product->quantity }}</td>
                                 <td>
                                     <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-warning">✏️ Edit</a>
                                     <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">

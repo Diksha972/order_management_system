@@ -34,10 +34,10 @@
                         <input type="number" step="0.01" name="price" class="form-control" value="{{ $product->price }}" required>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
                         <input type="number" name="quantity" class="form-control" value="{{ $product->quantity }}" required>
-                    </div>
+                    </div> --}}
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-warning">✏️ Update Product</button>

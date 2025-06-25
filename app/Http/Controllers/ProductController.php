@@ -23,7 +23,7 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'quantity' => 'required|integer'
+            // 'quantity' => 'required|integer'
         ]);
 
         Product::create($request->all());
@@ -41,7 +41,7 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'quantity' => 'required|integer'
+            // 'quantity' => 'required|integer'
         ]);
 
         $product->update($request->all());

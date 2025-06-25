@@ -8,7 +8,7 @@ use App\Models\Product;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'product_id', 'quantity', 'total_price', 'status'];
+    protected $fillable = ['user_id', 'product_id', 'quantity', 'total_price', 'status','address','phone', 'order_date', 'delivered_date'];
 
     public function user()
     {
