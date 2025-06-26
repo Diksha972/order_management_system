@@ -25,14 +25,13 @@
         <p><strong>Description:</strong> {{ $product->description }}</p>
         <p><strong>Quantity Ordered:</strong> {{ $order->quantity }}</p>
         <p><strong>Shipping Phone:</strong> {{ $order->phone }}</p>
-        <p><strong>Unit Price:</strong> ₹{{ number_format($product->price, 2) }}</p>
-        <p><strong>Total Price:</strong> ₹{{ number_format($order->total_price, 2) }}</p>
+        <p><strong>Unit Price:</strong> {{ number_format($product->price, 2) }}</p>
+        <p><strong>Total Price:</strong> {{ number_format($order->total_price, 2) }}</p>
 
         <hr>
 
-        <p><strong>Status:</strong> {{ ucfirst($order->status) }}</p>
         <p><strong>Order Date:</strong> {{ \Carbon\Carbon::parse($order->order_date)->format('d M Y, h:i A') }}</p>
-        <p><strong>Delivered Date:</strong>
+        <p><strong>Delivery Date:</strong>
             {{ $order->delivered_date ? \Carbon\Carbon::parse($order->delivered_date)->format('d M Y, h:i A') : 'Pending' }}
         </p>
 </body>

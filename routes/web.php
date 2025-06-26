@@ -28,6 +28,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/products', [OrderController::class, 'showProducts'])->name('products.list');
     Route::post('/order/{id}', [OrderController::class, 'placeOrder'])->name('order.place');
     Route::get('/my-orders', [OrderController::class, 'userOrders'])->name('orders.user');
+    Route::get('/products/{id}', [ProductController::class, 'showdetail'])->name('products.details');
+    Route::post('/order/{id}/cancel', [OrderController::class, 'cancelorder'])->name('order.cancel');
+
 
     // ✅ ADMIN ROUTES
     Route::middleware('admin')->group(function () {
@@ -51,5 +54,7 @@ Route::post('/admin/orders/{order}/status', [OrderController::class, 'updateStat
     });
 
 });
+
+
 
 

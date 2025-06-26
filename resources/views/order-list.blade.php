@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-11">
+    <div class="col-md-12">
         <div class="card shadow">
             <div class="card-header bg-dark text-white">
                 <h4 class="mb-0">All Orders</h4>
@@ -22,6 +22,10 @@
                                 <th>User</th>
                                 <th>Product</th>
                                 <th>Quantity</th>
+                                <th>Product Image</th>
+                                <th>Total Price</th>
+                                <th>Order Date</th>
+                                <th>delivery Date</th>
                                 <th>Status</th>
                                 <th>Change Status</th>
                             </tr>
@@ -33,6 +37,16 @@
                                 <td>{{ $order->product->name }}</td>
                                 <td>{{ $order->quantity }}</td>
                                 <td>
+                                        <img src="{{ asset('storage/products/' . $order->product->image) }}" style="width: 50px; height: 50px;">           
+                                </td>
+                                <td>₹{{ number_format($order->total_price, 2) }}</td>
+                                <td>{{ \Carbon\Carbon::parse($order->order_date)->format('d M Y, h:i A') }}</td>
+                                 <td>
+                                     {{ $order->delivered_date ? \Carbon\Carbon::parse($order->delivered_date)->format('d M Y, h:i A') : '' }}
+                                 </td>
+
+                                   <td>
+                                    {{-- Display status with appropriate badge --}}
                                     <span class="badge 
                                         @if($order->status === 'completed') bg-success
                                         @elseif($order->status === 'cancelled') bg-danger

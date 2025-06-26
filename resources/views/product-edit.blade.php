@@ -15,7 +15,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('products.update', $product) }}">
+                <form method="POST" action="{{ route('products.update', $product) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -34,10 +34,16 @@
                         <input type="number" step="0.01" name="price" class="form-control" value="{{ $product->price }}" required>
                     </div>
 
-                    {{-- <div class="mb-3">
-                        <label for="quantity" class="form-label">Quantity</label>
-                        <input type="number" name="quantity" class="form-control" value="{{ $product->quantity }}" required>
-                    </div> --}}
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
+                        @if ($product->image)
+                            <div class="mt-2">
+                                <p>Current Image:</p>
+                                <img src="{{ asset('storage/products/' . $product->image) }}" width="120">
+                            </div>
+                        @endif
+                    </div>
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-warning">✏️ Update Product</button>

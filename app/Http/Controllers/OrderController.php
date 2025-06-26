@@ -23,7 +23,7 @@ public function placeOrder(Request $request, $id)
 {
     $request->validate([
           'address' => 'required|string',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|min:12|max:12',
         'quantity' => 'required|integer|min:1|max:100', 
     ]);
 
@@ -91,4 +91,15 @@ public function placeOrder(Request $request, $id)
     return redirect()->route('orders.all')->with('success', 'Order status updated.');
 }
 
+public function cancelorder($id)
+{
+    $order = Order::findOrFail($id);
+    if ($order->delivered_date && Carbon::now()->greaterThanOrEqualTo($order->delivered_date)) {
+        return back()->with('error', 'Order cannot be cancelled after delivery date.');
+    }
+    $order->status = 'cancelled';
+    $order->save();
+
+    return back()->with('success', 'Order cancelled successfully.');
+}
 }

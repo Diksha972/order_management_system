@@ -22,8 +22,8 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Description</th>
+                                <th>Image</th>
                                 <th>Price (₹)</th>
-                                {{-- <th>Quantity</th> --}}
                                 <th width="150">Actions</th>
                             </tr>
                         </thead>
@@ -32,6 +32,9 @@
                             <tr>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->description }}</td>
+                                <td>
+                                        <img src="{{ asset('storage/products/' . $product->image) }}"  alt="{{ $product->name }}" style="width: 50px; height: 50px;">             
+                                </td>
                                 <td>₹{{ number_format($product->price, 2) }}</td>
                                 <td>
                                     <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-warning">✏️ Edit</a>

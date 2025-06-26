@@ -20,7 +20,9 @@
                                 <th>Product</th>
                                 <th>Quantity</th>
                                 <th>Total Price</th>
+                                <th>Order Date</th>                             
                                 <th>Status</th>
+                                <th>Cancel Order</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,7 +30,8 @@
                                 <tr>
                                     <td>{{ $order->product->name }}</td>
                                     <td>{{ $order->quantity }}</td>
-                                    < <td>₹{{ number_format($order->total_price, 2) }}</td>
+                                    <td>₹{{ number_format($order->total_price, 2) }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($order->order_date)->format('d M Y, h:i A') }}</td>
                                     <td>
                                         <span class="badge 
                                             @if($order->status === 'completed') bg-success 
@@ -37,6 +40,17 @@
                                             @endif">
                                             {{ ucfirst($order->status) }}
                                         </span>
+                                    </td>
+                                    <td>
+                                         @if($order->status !== 'cancelled' && \Carbon\Carbon::now()->lt($order->delivered_date))
+                                        <form method="POST" action="{{ route('order.cancel', $order->id) }}"
+                                              onsubmit="if(confirm('Are you sure you want to cancel this order?')) { this.querySelector('button').disabled = true; } else { return false; }">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
+                                        </form>
+                                    @else
+                                        <button class="btn btn-sm btn-secondary" disabled>Cancelled</button>
+                                    @endif
                                     </td>
                                 </tr>
                             @endforeach

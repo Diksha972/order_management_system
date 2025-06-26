@@ -36,28 +36,31 @@
 <!-- Main Shopping Content -->
 <div class="container mt-4">
     <h3 class="mb-4">Available Products</h3>
-    <div class="row">
-        @foreach(\App\Models\Product::all() as $product)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $product->name }}</h5>
-                        <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
-                        <p><strong>Price: ₹{{ $product->price }}</strong></p>
-
+  <div class="row">
+    @foreach(\App\Models\Product::all() as $product)
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow rounded-3 border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-center  mb-3">{{ $product->name }}</h5>
+                    <img src="{{ asset('storage/products/' . $product->image) }}" class="img-fluid rounded mb-3" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
+                    <p class="card-text text-muted mb-3">{{ Str::limit($product->description, 100) }}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <strong class="text-dark">₹{{ $product->price }}</strong>
                         @auth
                             <form method="POST" action="{{ route('order.place', $product->id) }}">
                                 @csrf
-                                <button class="btn btn-success">Order</button>
+                                <button class="btn btn-sm btn-success">Place Order</button>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" class="btn btn-outline-primary">Login to Order</a>
+                            <a href="{{ route('login') }}" class="btn btn-sm btn-outline-primary">Order</a>
                         @endauth
                     </div>
                 </div>
             </div>
-        @endforeach
-    </div>
+        </div>
+    @endforeach
+</div>
+
 </div>
 
 <!-- Bootstrap JS -->
